@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html data-html-server-rendered="true" lang="en" data-vue-tag="lang">
   <head>
-    <title data-vue-tag="true">NodeJS Event Emitter สำคัญฉะไหน</title><meta data-vue-tag="true" charset="utf-8"/><meta data-vue-tag="true" name="generator" content="Gridsome v0.4.7"/><meta data-vue-tag="true" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta data-vue-tag="true" data-key="format-detection" name="format-detection" content="telephone=no"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.efcb514.png"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.efcb514.png"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.efcb514.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.efcb514.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.efcb514.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.efcb514.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.efcb514.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.efcb514.png"/><link data-vue-tag="true" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mali:400,500|Nunito"/><link data-vue-tag="true" rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css"/><noscript data-vue-tag="true" ><style>.g-image--loading{display:none;}</style></noscript><link rel="preload" href="/assets/css/styles.cb3bedbe.css" as="style"><link rel="preload" href="/assets/js/app.619ce558.js" as="script"><link rel="preload" href="/assets/css/2.styles.9ea13f51.css" as="style"><link rel="preload" href="/assets/js/component--blog-post.4dcdcaa0.js" as="script"><link rel="prefetch" href="/assets/js/component--about.8b0420a9.js"><link rel="prefetch" href="/assets/js/component--home.91418092.js"><link rel="prefetch" href="/assets/js/component--ramble.ba17e886.js"><link rel="prefetch" href="/assets/js/component--series.3d21263f.js"><link rel="prefetch" href="/assets/js/page-query.01874aa6.js"><link rel="stylesheet" href="/assets/css/styles.cb3bedbe.css"><link rel="stylesheet" href="/assets/css/2.styles.9ea13f51.css">
+    <title data-vue-tag="true">NodeJS Event Emitter สำคัญฉะไหน</title><meta data-vue-tag="true" charset="utf-8"/><meta data-vue-tag="true" name="generator" content="Gridsome v0.4.7"/><meta data-vue-tag="true" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta data-vue-tag="true" data-key="format-detection" name="format-detection" content="telephone=no"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.efcb514.png"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.efcb514.png"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.efcb514.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.efcb514.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.efcb514.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.efcb514.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.efcb514.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.efcb514.png"/><link data-vue-tag="true" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mali:400,500|Nunito"/><link data-vue-tag="true" rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css"/><noscript data-vue-tag="true" ><style>.g-image--loading{display:none;}</style></noscript><link rel="preload" href="/assets/css/styles.cb3bedbe.css" as="style"><link rel="preload" href="/assets/js/app.5af13e64.js" as="script"><link rel="preload" href="/assets/css/2.styles.155cf43c.css" as="style"><link rel="preload" href="/assets/js/component--blog-post.47dd6123.js" as="script"><link rel="prefetch" href="/assets/js/component--about.2206d8c6.js"><link rel="prefetch" href="/assets/js/component--home.20934811.js"><link rel="prefetch" href="/assets/js/component--ramble.252f0c1b.js"><link rel="prefetch" href="/assets/js/component--series.3d21263f.js"><link rel="prefetch" href="/assets/js/page-query.01874aa6.js"><link rel="stylesheet" href="/assets/css/styles.cb3bedbe.css"><link rel="stylesheet" href="/assets/css/2.styles.155cf43c.css">
   </head>
   <body data-vue-tag="">
     <div data-server-rendered="true" id="app"><nav class="split-nav"><div class="nav-brand"><h3><a href="/" class="nav-link">Lagman</a></h3></div><div class="collapsible"><input id="collapsible1" type="checkbox" name="collapsible1"><button><label for="collapsible1"><div class="bar1"></div><div class="bar2"></div><div class="bar3"></div></label></button><div class="collapsible-body"><ul class="inline"><li><a href="/ramble" class="nav-link">เล่าไปเรื่อย</a></li><li><a href="/series" class="nav-link">เล่าเป็นซีรีย์</a></li><li><a href="/about" class="nav-link">เกี่ยวกับผม</a></li></ul></div></div></nav><div class="post"><div class="article"><img src="" data-srcset="" data-sizes="" data-src="https://i.imgur.com/7oG5ce7.png" class="cover-image g-image g-image--lazy g-image--loading"><noscript><img src="https://i.imgur.com/7oG5ce7.png" class="g-image g-image--loaded"></noscript><h3 id="title">NodeJS Event Emitter สำคัญฉะไหน</h3><p id="short-title">
@@ -26,10 +26,13 @@
 </code></pre>
 <p><br/><br/>
 <strong>#2 สร้างตัว emit data</strong></p>
-<pre><code>myService.emit('registration',{
-      name: "Tar",
-      email: "Tar@email.com"
-   })
+<pre><code>// ให้มีการส่งข้อมูลทุกๆ 1 วินาที
+  setInterval(()=>{
+    myService.emit('registration',{
+          name: "Tar",
+          email: "Tar@email.com"
+       })
+  },1000)
 </code></pre>
 <p>ต้องอธิบายก่อนว่าตัว registration คือชื่อ event ครับส่วนตัว object คือข้อมูลที่เราจะส่งผ่านตัว regitration event</p>
 <p><br/><br/>
@@ -37,6 +40,7 @@
 <pre><code>  // ใครยังไม่เคยใช้ => หรือ arrow function ผมมี ref ไว้ข้างล่างครับ
   // email service
   myService.on('registration', (userData) => {
+    console.log("\n\n");
     console.log(`ส่ง email ไปหาคุณ ${userData.name} ไปที่ ${userData.email}`)
   })
 
@@ -48,30 +52,41 @@
 <p><br/><br/>
 <strong>#4 โค๊ดเต็มๆตามนี้เลยครับ</strong></p>
 <pre><code>  const EventEmitter = require('events');
-  const myService = new EventEmitter();
+      const myService = new EventEmitter();
 
-  myService.emit('registration',{
-    name: "Tar",
-    email: "Tar@email.com"
-  })
+      setInterval(()=>{
+        myService.emit('registration',{
+              name: "Tar",
+              email: "Tar@email.com"
+           })
+        },1000)
 
-  myService.on('registration', (userData) => {
-    console.log(`ส่ง email ไปหาคุณ ${userData.name} ไปที่ ${userData.email}`)
-  })
+      myService.on('registration', (userData) => {
+        console.log("\n\n");
+        console.log(`ส่ง email ไปหาคุณ ${userData.name} ไปที่ ${userData.email}`)
+      })
 
 
-  myService.on('registration', (userData)=>{
-    console.log(`เจ้านายครับมีลูกค้าสมัครสมาชิก คุณ ${userData.name}$`)
-  })
+      myService.on('registration', (userData)=>{
+        console.log(`เจ้านายครับมีลูกค้าสมัครสมาชิก คุณ ${userData.name}$`)
+      })
 </code></pre>
 <br/>
+<p><strong>#5 มาดูผลลัพธ์กันเลยครับ</strong></p>
+<p align="center">
+  <img src="https://i.imgur.com/i7sXG6v.png" width="50%">
+</p>  
+<br/>
+<br/>
 ก็จบกันไปแล้วนะครับสำหรับ NodeJS Event Emitter แบบพื้นฐานมาก!!!! ผมก็หวังว่าผู้อ่านจะเข้าใจการทำงานและการเขียน Event Emitter นะครับผม วันนี้ผมต้าขอตัวลาไปก่อนชะแว๊บ~~~
+<br/>ปล. เดี๋ยวจะมาเขียนเพิ่มเติมว่าไปปรับใช้งานยังไงนะครับ ^ _ ^
+<br/><br/>
 <p>Ref:</p>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions" target="_blank" rel="nofollow noopener noreferrer">Arrow functions</a></p>
 <p><a href="https://en.wikipedia.org/wiki/Event-driven_architecture" target="_blank" rel="nofollow noopener noreferrer">Event-driven architecture</a></p>
 <p><a href="https://en.wikipedia.org/wiki/Observer_pattern" target="_blank" rel="nofollow noopener noreferrer">Observer pattern</a></p>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals" target="_blank" rel="nofollow noopener noreferrer">Template literals</a></p>
 </div></div></div></div>
-    <script src="/assets/js/app.619ce558.js" defer></script><script src="/assets/js/component--blog-post.4dcdcaa0.js" defer></script>
+    <script src="/assets/js/app.5af13e64.js" defer></script><script src="/assets/js/component--blog-post.47dd6123.js" defer></script>
   </body>
 </html>
