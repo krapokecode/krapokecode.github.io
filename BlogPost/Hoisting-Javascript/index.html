@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html data-html-server-rendered="true" lang="en" data-vue-tag="lang">
+  <head>
+    <title data-vue-tag="true">Hoisting ใน Javascript คืออะไร</title><meta data-vue-tag="true" charset="utf-8"/><meta data-vue-tag="true" name="generator" content="Gridsome v0.4.7"/><meta data-vue-tag="true" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta data-vue-tag="true" data-key="format-detection" name="format-detection" content="telephone=no"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.a16d07a.png"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.a16d07a.png"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.a16d07a.png"/><link data-vue-tag="true" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mali:400,500|Nunito"/><link data-vue-tag="true" rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css"/><noscript data-vue-tag="true" ><style>.g-image--loading{display:none;}</style></noscript><link rel="preload" href="/assets/css/styles.b2092d71.css" as="style"><link rel="preload" href="/assets/js/app.7f23d2b9.js" as="script"><link rel="preload" href="/assets/css/2.styles.657adf6c.css" as="style"><link rel="preload" href="/assets/js/component--blog-post.193144be.js" as="script"><link rel="prefetch" href="/assets/js/component--about.bb55f8e7.js"><link rel="prefetch" href="/assets/js/component--home.2f154997.js"><link rel="prefetch" href="/assets/js/component--ramble.5493ca79.js"><link rel="prefetch" href="/assets/js/component--series.c43b0dd4.js"><link rel="prefetch" href="/assets/js/page-query.9b92ff4f.js"><link rel="stylesheet" href="/assets/css/styles.b2092d71.css"><link rel="stylesheet" href="/assets/css/2.styles.657adf6c.css">
+  </head>
+  <body data-vue-tag="">
+    <div data-server-rendered="true" id="app"><nav class="split-nav"><div class="nav-brand"><h3><a href="/" class="nav-link">KrapokeCode</a></h3></div><div class="collapsible"><input id="collapsible1" type="checkbox" name="collapsible1"><button><label for="collapsible1"><div class="bar1"></div><div class="bar2"></div><div class="bar3"></div></label></button><div class="collapsible-body"><ul class="inline"><li><a href="/ramble" class="nav-link">เล่าไปเรื่อย</a></li><li><a href="/series" class="nav-link">เล่าเป็นซีรีย์</a></li><li><a href="/about" class="nav-link">เกี่ยวกับพวกเรา</a></li></ul></div></div></nav><div class="post"><div class="article"><img src="" data-srcset="" data-sizes="" data-src="https://i.imgur.com/GYwt6rf.png" class="cover-image g-image g-image--lazy g-image--loading"><noscript><img src="https://i.imgur.com/GYwt6rf.png" class="g-image g-image--loaded"></noscript><h3 id="title">Hoisting ใน Javascript คืออะไร</h3><p id="short-title">
+      13 February, 2019, By Tar Jarupong
+    </p><div id="blog-container"><p>สำหรับใครที่เคยชินกับ var มาแล้วคงเข้าใจอยู่แล้วว่ามี let &#x26; const ที่มาแทนที่รุ่นพี่ไปแล้วเพราะว่า 2 ตัวนี้แก้ปัญหาหาเรื่อง hoisting แต่ๆ ส่วนใหญ่แล้วเราเคยได้ยินอย่างว่า
+<br>
+<br></p>
+<p class="qoute">
+  อย่าไปใช้ var นะเพราะมันให้เกิด hoisting
+</p>
+<p>แล้วอะไรคือ hoisting กันล่ะวันนี้ผมจะมาอธิบายให้ฟังกันครับ เริ่ม~~~</p>
+<br>
+<h5 id="hoisting-"><a href="#hoisting-" aria-hidden="true"><span class="icon icon-link"></span></a>Hoisting ?</h5>
+<p>       hoisting คือการประกาศตัวแปรแต่ยังไม่มีการกำหนดค่าเข้าไป และอุ้มตัวแปรไปอยู่บนสุดครับ</p>
+<br>
+<pre><code>console.log(a);
+    var a = 'สวัสดีครับ';
+</code></pre>
+<br>
+ถ้าเป็นภาษาอื่นมันคง error ว่าไม่ได้มีการประกาศตัวแปร a โว้ยไปประกาศส่ะ แต่!ใน JS อะไรก็เกิดขึ้นได้ถ้ามีปาปิก้า มันจะขึ้นว่า
+ undefined แทน... เอ้าเป็นไปได้ไงมันต้อง error สิฟ๊ะ ตอนนี้ทุกคนกำลัง งงว่ามันเกิดขึ้น มันมีชื่อเรียกว่า lexical environment ครับ...
+<br>
+<br>
+<h4 id="lexical-environment-"><a href="#lexical-environment-" aria-hidden="true"><span class="icon icon-link"></span></a>Lexical environment ?</h4>
+<p>      ผมเดาว่าเป็นคำที่ทุกคนไม่คุ้นหูแน่ๆเลย แต่เอาเป็นว่าช่างมันเถอะครับ ก่อนอื่นผมของเรียกมันว่าเจ้า lex ก็แล้วกันนะครับจะได้คุ้นหูกัน ผมจะอธิบายว่าเจ้านี้คืออะไร เอาไว้ทำอะไร สำคัญยังไง</p>
+<br>
+<p>       1. คือ ? ==> มันคือกล่องใบนึงครับที่เอาไว้เก็บ variable, function ที่จะเอาไปใช้งานใน software ของเราครับ</p>
+<pre><code>LexicalEnvironment = {
+      Identifier:  &#x3C;value>,
+      Identifier:  &#x3C;function object>
+    }
+</code></pre>
+<br>
+<p>รูปแบบมันก็จะประมาณนี้ครับ เมื่อใดก็ตามที่เราประกาศตัวแปร <strong><em>var a = 'name'</em></strong> อย่างนี้ตัวเจ้า lex จะเป็นอย่างนี้</p>
+<pre><code>LexicalEnvironment = {
+      a:  'name',
+    }
+</code></pre>
+<p>จะเห็นว่ามีการกำหนดค่าให้ a ลงไปประมาณนี้ครับ</p>
+<br>
+<p>       2. ปัญหา ? ==> แล้วเจ้า lex มันจะมีปัญหาคืออะไรก็ปรกติดีนี้น๊า ในความปรกติมีความไม่ปรกคือ ถ้าสมมุติว่าทำแบบนี้ล่ะ</p>
+<pre><code>   var a;
+      console.log(a);
+      a = "Tar";
+</code></pre>
+<br>
+<p>จะเห็นว่าประกาศตัวแปรแต่ไม่ได้กำหนดค่าไปแล้วแสดงข้อความออกไปเลย มันต้อง error แน่ๆเลย แต่!! ต้องกันข้ามเลยมันจะไม่ error แต่จะเป็น  undefined  ดังนั้นตัวเจ้า lex จะเป็นแบบนี้คือการที่เจ้า lex เนี๊ยจะทำการกำหนดค่าให้ตัวแปรที่ประกาศไปแล้วแต่ยังไม่กำหนดค่าให้เป็น undefined ไว้ก่อน</p>
+<pre><code>LexicalEnvironment = {
+      a: undefined,
+    }
+</code></pre>
+<br>
+<p>แล้วมันถึงไปกำหนดค่าไปหลังจาก console.log(a)</p>
+<pre><code>LexicalEnvironment = {
+      a: 'Tar',
+    }
+</code></pre>
+<p>นี้ก็คือการทำงานที่เรียกกันว่า <strong>Hoisting</strong> ครับ</p>
+<br>
+<h4 id="ใช้-let--const-กันกว่า"><a href="#%E0%B9%83%E0%B8%8A%E0%B9%89-let--const-%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%81%E0%B8%A7%E0%B9%88%E0%B8%B2" aria-hidden="true"><span class="icon icon-link"></span></a>ใช้ let &#x26; const กันกว่า</h4>
+<br>
+<p class="qoute">
+  ก็ไปใช้ let & const แทนการใช้ var กันเถ๊อะ!!!!
+</p>
+<br>
+<p>      คงนี้ไม่พ้นกับการใช้ let &#x26; const แต่หารู้ไม่ว่าเจ้าสองตัวนี้ก็ไม่ต่างจาก var มากมันไม่ได้หนีไปจากเจ้า lex เลยแต่แค่เปลี่ยนค่ามันแค่นั้นเองแทนที่จะเป็น undefined ก็เป็น uninitialized แทน งั้นผมยกตัวอย่างดีกว่า</p>
+<pre><code>let a;
+    console.log(a);
+    a = "Tar";
+</code></pre>
+<br>
+<p>ตรงตัวแปร a เจ้า lex จะเป็นแบบนี้แทน</p>
+<pre><code>LexicalEnvironment = {
+      a: &#x3C;uninitialized>
+    }
+</code></pre>
+<p>ทุกคนเห็นไว้ว่ามัน make sense กว่าแทนที่จะ undefined ส๊ะอีกนะครับ เย้!! ในที่สุดผมก็เขียนเสร็จสักทีครับ สำหรับใครอยากเห็นตัวอย่างมากขึ้นไปอ่านที่ devhoy ได้เลยครับผมทิ้งไว้ข้างล่างให้นะครับ สวัสดีครับ</p>
+<br>
+<p>ปล. ที่จริงมันมีเรื่อง Execution Context และ Execution Stack อีกถ้าผมไม่ลืมผมจะมาอธิบายนะครับ ขอไปให้อ่านให้เข้าใจก่อนนะครับ</p>
+<br>
+<p>Ref:</p>
+<p><a href="https://blog.bitsrc.io/hoisting-in-modern-javascript-let-const-and-var-b290405adfda" target="_blank" rel="nofollow noopener noreferrer">Hoisting in Modern JavaScript</a></p>
+<p><a href="devahoy.com/posts/javascript-variable-hoisting/">DevAhoy - hoisting</a></p>
+</div></div></div></div>
+    <script src="/assets/js/app.7f23d2b9.js" defer></script><script src="/assets/js/component--blog-post.193144be.js" defer></script>
+  </body>
+</html>
