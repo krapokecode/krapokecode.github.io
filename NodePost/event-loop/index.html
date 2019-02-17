@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html data-html-server-rendered="true" lang="en" data-vue-tag="lang">
+  <head>
+    <title data-vue-tag="true">Event-loop แบบพื้นฐานมากกกกก ตอนที่ 1</title><meta data-vue-tag="true" charset="utf-8"/><meta data-vue-tag="true" name="generator" content="Gridsome v0.4.7"/><meta data-vue-tag="true" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta data-vue-tag="true" data-key="format-detection" name="format-detection" content="telephone=no"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.a16d07a.png"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.a16d07a.png"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.a16d07a.png"/><link data-vue-tag="true" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mali:400,500|Nunito"/><link data-vue-tag="true" rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css"/><noscript data-vue-tag="true" ><style>.g-image--loading{display:none;}</style></noscript><link rel="preload" href="/assets/css/styles.b2092d71.css" as="style"><link rel="preload" href="/assets/js/app.81b77a4a.js" as="script"><link rel="preload" href="/assets/css/7.styles.ef741d80.css" as="style"><link rel="preload" href="/assets/js/component--node-post.f133014c.js" as="script"><link rel="prefetch" href="/assets/js/component--about.abaa4b10.js"><link rel="prefetch" href="/assets/js/component--blog-post.eedb83f1.js"><link rel="prefetch" href="/assets/js/component--course-dsa.9a92f32a.js"><link rel="prefetch" href="/assets/js/component--course-fp.1a49cff0.js"><link rel="prefetch" href="/assets/js/component--course-node-core.709cd550.js"><link rel="prefetch" href="/assets/js/component--home.f4100d0d.js"><link rel="prefetch" href="/assets/js/component--ramble.fdf4bd40.js"><link rel="prefetch" href="/assets/js/component--series.988529db.js"><link rel="prefetch" href="/assets/js/page-query.b2aa1a53.js"><link rel="stylesheet" href="/assets/css/styles.b2092d71.css"><link rel="stylesheet" href="/assets/css/7.styles.ef741d80.css">
+  </head>
+  <body data-vue-tag="">
+    <div data-server-rendered="true" id="app"><nav class="split-nav"><div class="nav-brand"><h3><a href="/" class="nav-link">KrapokeCode</a></h3></div><div class="collapsible"><input id="collapsible1" type="checkbox" name="collapsible1"><button><label for="collapsible1"><div class="bar1"></div><div class="bar2"></div><div class="bar3"></div></label></button><div class="collapsible-body"><ul class="inline"><li><a href="/ramble" class="nav-link">เล่าไปเรื่อย</a></li><li><a href="/series" class="nav-link">เล่าเป็นซีรีย์</a></li><li><a href="/about" class="nav-link">เกี่ยวกับพวกเรา</a></li></ul></div></div></nav><div class="post"><div class="article"><img src="" data-srcset="" data-sizes="" data-src="https://i.imgur.com/ywItdDB.png" class="cover-image g-image g-image--lazy g-image--loading"><noscript><img src="https://i.imgur.com/ywItdDB.png" class="g-image g-image--loaded"></noscript><h3 id="title">Event-loop แบบพื้นฐานมากกกกก ตอนที่ 1</h3><p id="short-title">
+      16 February, 2019, By Tar Jarupong
+    </p><div id="blog-container"><p>สวัสดีครับผมกลับมาพบกับต้าคนเดิมคนดีอีกเช่นเคยนะครับ ซึ่งวันนี้ผมจะมาเล่าเรื่อง Event-loop ใน NodeJS ในภาษาและรูปภาพที่ทุกคนเข้าใจกันมาจะรอช้าอยู่ทำไมเข้าเรื่องกันเลย เดี๋ยวก่อนสิ ถ้าสำหรับใครที่ยังไม่ได้อ่านเรื่อง execution stack แนะนำให้กลับไปอ่านก่อนนะครับ <a href="https://krapokecode.github.io/BlogPost/exec-context-stack" target="_blank" rel="nofollow noopener noreferrer">link</a> จะได้เข้าใจมากขึ้น มาเข้าเรื่องกันเลยครับ</p>
+<h4 id="event-loop"><a href="#event-loop" aria-hidden="true"><span class="icon icon-link"></span></a>Event loop</h4>
+<p>คือการทำงานใน NodeJS เป็นแบบ Single-thread แล้วตัว single thread คืออะไร มาเริ่มที่ single thread กันก่อนนะครับ เริ่ม~~~</p>
+<p><img src="https://i.imgur.com/sxoUOEC.png" alt="sxoUOEC.png"></p>
+<p>ตรงนี้ทุกคนคนจะเห็นว่าในหนึ่ง process มันมีอยู่หนึ่ง thread ครับแต่ในความเป็นจริงแล้ว process สามารถมีได้หลายๆ thread โดยแต่ละตัวจะกระจายกันทำงานคนละแบบหรือทำงานแบบเดียวกันก็ได้ ทั้งหมดนี้คือ process &#x26; thread แบบพื้นฐานสุดๆ ได้เวลากลับมาเข้าเรื่องหลักกันครับ เรื่องของเรื่องก็คือ Event-loop มันทำงานอยู่แค่ thread เดียวครับ รูปภาพก็จะประมาณนี้ครับ</p>
+<pre><code>// Event loop
+   ┌───────────────────────────┐
+┌─>│           timers          │
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │     pending callbacks     │
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+│  │       idle, prepare       │
+│  └─────────────┬─────────────┘      ┌───────────────┐
+│  ┌─────────────┴─────────────┐      │   incoming:   │
+│  │           poll            │&#x3C;─────┤  connections, │
+│  └─────────────┬─────────────┘      │   data, etc.  │
+│  ┌─────────────┴─────────────┐      └───────────────┘
+│  │           check           │
+│  └─────────────┬─────────────┘
+│  ┌─────────────┴─────────────┐
+└──┤      close callbacks      │
+   └───────────────────────────┘
+</code></pre>
+<p>ผมต้องขอบอกก่อนว่าตัว NodeJS จะทำงานเป็นแบบคิววิ่งวนไปเรื่อยๆเพื่อเช็คว่ามีอะไรที่ต้องประมวลผลอีกรึเปล่า ประมาณนี้ครับ งั้นก็มาพูดถึงแต่ละตัวกันเลยครับ</p>
+<p><strong>Timers</strong></p>
+<p>      เป็นสิ่งแรกในการทำงานของ event loop สำหรับจัดการเป็นส่วนสำหรับเรียกใช้งาน function ที่เป็น callback เช่น <em>setTimeout()</em> , <em>setInterval()</em> เป็นต้น</p>
+<p><strong>Pending Callback</strong></p>
+<p>       สำหรับจัดการเมื่อ callback ทำงานเสร็จสิ้นหรือ error ครับ</p>
+<p><strong>Poll</strong></p>
+<p>      ตัว poll เป็นตัวรอรับ request หรือ I/O event อันใหม่</p>
+<p><strong>idle, prepare</strong></p>
+<p>       จะทำงานส่วนอยู่ใต้ลงไปอีก ผมขอพูดถึงบทบทความหน้าครับ ^^</p>
+<p><strong>check</strong></p>
+<p>       ตรงจุดนี้ใช้สำหรับประมวลผล <em>setImmediate()</em> ได้ครับ</p>
+<p><strong>Close callback</strong></p>
+<p>      ตามชื่อเลยครับ สำหรับปิด callback หรือ event ต่างๆ</p>
+<br>
+<p>ต้องขอตัดจบแบบละครไทยด้วยนะครับในบทความหน้าผมสัญญาว่าจะมาเล่าให้ละเอียดกว่านี้เพื่อให้ทุกคนเข้าใจมากขึ้นครับ</p>
+<p>ปล. ที่จริงมีเรื่อง Event-multiplexer, mico task blah blah ที่ผมยังไม่ได้พูดอีก เศร้า</p>
+</div></div></div></div>
+    <script src="/assets/js/app.81b77a4a.js" defer></script><script src="/assets/js/component--node-post.f133014c.js" defer></script>
+  </body>
+</html>
