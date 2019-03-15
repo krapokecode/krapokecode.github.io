@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html data-html-server-rendered="true" lang="en" data-vue-tag="lang">
+  <head>
+    <title data-vue-tag="true">NodeJS Stream ไหลดั่งสายน้ำ ตอนที่ 1 (Readable)</title><meta data-vue-tag="true" charset="utf-8"/><meta data-vue-tag="true" name="generator" content="Gridsome v0.4.7"/><meta data-vue-tag="true" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><meta data-vue-tag="true" data-key="format-detection" name="format-detection" content="telephone=no"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.a16d07a.png"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.a16d07a.png"/><link data-vue-tag="true" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.a16d07a.png"/><link data-vue-tag="true" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.a16d07a.png"/><link data-vue-tag="true" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mali:400,500|Nunito"/><link data-vue-tag="true" rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css"/><noscript data-vue-tag="true" ><style>.g-image--loading{display:none;}</style></noscript><link rel="preload" href="/assets/css/styles.b2092d71.css" as="style"><link rel="preload" href="/assets/js/app.f5ad6680.js" as="script"><link rel="preload" href="/assets/css/7.styles.0aea290b.css" as="style"><link rel="preload" href="/assets/js/component--node-post.0ff6e571.js" as="script"><link rel="prefetch" href="/assets/js/component--about.37bf52e8.js"><link rel="prefetch" href="/assets/js/component--blog-post.d4862da1.js"><link rel="prefetch" href="/assets/js/component--course-dsa.11389c70.js"><link rel="prefetch" href="/assets/js/component--course-fp.47a1590c.js"><link rel="prefetch" href="/assets/js/component--course-node-core.44e03284.js"><link rel="prefetch" href="/assets/js/component--home.90ea7a18.js"><link rel="prefetch" href="/assets/js/component--ramble.4a97bb3e.js"><link rel="prefetch" href="/assets/js/component--series.f7ee1ad3.js"><link rel="prefetch" href="/assets/js/page-query.d8ef2095.js"><link rel="stylesheet" href="/assets/css/styles.b2092d71.css"><link rel="stylesheet" href="/assets/css/7.styles.0aea290b.css">
+  </head>
+  <body data-vue-tag="">
+    <div data-server-rendered="true" id="app"><nav class="split-nav"><div class="nav-brand"><h3><a href="/" class="nav-link">KrapokeCode</a></h3></div><div class="collapsible"><input id="collapsible1" type="checkbox" name="collapsible1"><button><label for="collapsible1"><div class="bar1"></div><div class="bar2"></div><div class="bar3"></div></label></button><div class="collapsible-body"><ul class="inline"><li><a href="/ramble" class="nav-link">เล่าไปเรื่อย</a></li><li><a href="/series" class="nav-link">เล่าเป็นซีรีย์</a></li><li><a href="/about" class="nav-link">เกี่ยวกับพวกเรา</a></li></ul></div></div></nav><div class="post"><div class="article"><img src="" data-srcset="" data-sizes="" data-src="https://i.imgur.com/G66FEoZ.png" class="cover-image g-image g-image--lazy g-image--loading"><noscript><img src="https://i.imgur.com/G66FEoZ.png" class="g-image g-image--loaded"></noscript><h3 id="title">NodeJS Stream ไหลดั่งสายน้ำ ตอนที่ 1 (Readable)</h3><p id="short-title">
+      10 March, 2019, By Tar Jarupong
+    </p><div id="blog-container"><p>NodeJS stream นี้มันอะไรกันนะ มันสำคัญขนาดนั้นเลยเหรอ ไม่เห็นเคยได้ยิน ใช่ผมก็ไม่เคยได้ยินแต่ด้วยต่อมอยากเ-อก เอ้ยอยากรู้มันทำงานก็เลยได้ไปศึกษามาแล้วอยากจะเขียนบทความให้ทุกคนได้เข้าใจกันครับ มาเริ่มกันเลยดีกว่า</p>
+<h4 id="อะไรคือ-stream"><a href="#%E0%B8%AD%E0%B8%B0%E0%B9%84%E0%B8%A3%E0%B8%84%E0%B8%B7%E0%B8%AD-stream" aria-hidden="true"><span class="icon icon-link"></span></a>อะไรคือ Stream</h4>
+<p>มันคือ data flow ที่ไหลไปเรื่อยๆๆ ผู้อ่านทุกคน คงจะงงว่า "ไหลไปเรื่อยๆ" เป็นยังไง เดี๋ยวผมจะวาดภาพให้ดูรอสักแป็บนึงครับ</p>
+<p align="center">
+	<img src="https://i.imgur.com/G66FEoZ.png">
+</p>
+<p>ถ้าดูจากรูปจะเห็นว่าถ้าเราต้องการที่จะเขียนหรืออ่านไฟล์อะไรเราจะต้องใช้ function หลัก 2 ตัวนี้แน่นอน</p>
+<p><code>fs.readFile()</code>
+<br></p>
+<p><code>fs.writeFile()</code>
+<br></p>
+<p>แต่การทำแบบนี้มันผิดมากๆครับ ก็เพราะว่ามันคือรูปข้างบนที่ผมวาดไว้(รูปแรก) ทุกคนจะเห็นว่าวิธีการของมันก็คือเอาข้อมูลที่เราต้องเขียน อ่าน มาเก็บลง memory ตรงๆเลยแล้วถ้าสมมุติว่าขนาดไฟล์มีขนาด 4 GB บางคนอาจจะคิดว่า "โอ้ยสบาย server ผมน่ะมี RAM ตั้ง 128 GB แค่นี้สบายมากๆ" แต่ถ้าสมมุติว่ามีคนอัพโหลดไฟล์พร้อมกันประมาณ 100 คนและขนาด 4 GB เหมือนกันจะจัดการยังไงล่ะ คงไม่ไหวแน่นอนครับ ตรงจุดนี้ถึงเป็นเหตุสมควรที่จะใช้ Streams แล้วล่ะครับ</p>
+<br>
+<br>
+<p><strong>ข้อดี Stream</strong></p>
+<p>      1. ทำให้ใช้ memory ได้น้อยลงเพราะตัว Streams จะทำการค่อยๆ process ทีละนิดแล้วคอยเช็คว่าข้อมูลที่ต้องการ process ยังมีอยู่มั๊ย ถ้ายังมีอยู่ก็ process ต่อไป
+<br>
+      2. ทำให้ใช้เวลาเริ่มต้นการทำงานน้อยลงเพราะว่ามันไม่ต้องเสียเวลา process ก้อนข้อมูลอันใหญ่ มันก็แค่ค่อยทำทีละหน่อยๆ
+<br></p>
+<br>
+<br>
+<p><strong>หลักๆมี 4 แต่วันขอพูดแค่ 1</strong></p>
+<p>       1.Readable คือการอ่านข้อมูล
+จะเสียเวลาอยู่ทำไมกันมาดูตัวอย่างกันเลยดีกว่าครับ เดี๊ยว!!! ผมลืมอธิบายราละเอียดของ event และ function ต่างๆเลย ผมขออธิบายตรงนี้ก่อนนะครับ</p>
+<p>      event จะมีหลักๆก็จะมี</p>
+<p>      'data' เป็น event สำหรับคอยตรวจสอบเวลาที่มีข้อมูลเข้ามาใหม่</p>
+<p>      'end' เป็น event ที่จะบอกว่าไม่มีข้อมูลใหม่มาแล้ว</p>
+<p>      'error' เป็น event ที่คอยบอกว่าเกิด error อะไรขึ้นบ้างระหว่างทาง</p>
+<p>      'close' เป็น event ที่เกิดขึ้นตอนที่มีการเรียกใช้ destroy();
+<br>
+<br></p>
+<p>       function ก็จะมี</p>
+<p>       on() สำหรับเรียกใช้เพื่อที่จะตรวจสอบด้วย event ต่างๆ</p>
+<p>       push() สำหรับส่งข้อมูลเข้าไป</p>
+<p>       pause() หยุดการทำงานชั่วคราว</p>
+<p>       resume() สั่งให้ stream มีการทำงานต่อได้</p>
+<p>       isPaused() เป็นตัวเอาไว้ตรวจสอบว่า stream ตอนนี้มีการหยุดรึเปล่า</p>
+<p>       destroy() เป็นการ</p>
+<p>เฮ้อในที่สุดผมก็เขียนเสร็จสักที เสียเวลาอยู่ทำไมมาเริ่มตัวอย่างกันเลย~~~</p>
+<br>
+<br>
+<p><strong><em>ตัวอย่างที่ 1</em></strong></p>
+<br>
+<pre><code>const { Readable } = require('stream')
+
+const readStream = new Readable({
+  read(){}
+})
+
+readStream.on('data',(data)=>{
+  console.log(data)
+})
+
+readStream.on('end',()=>{
+  console.log("No more data")
+})
+
+readStream.push("Hello world");
+readStream.push("Hello Krapoke Node");
+
+readStream.push(null);
+</code></pre>
+<p>ตรงนี้ผมได้ทำการสร้าง listener 2 ตัวโดยอันแรกสำหรับตรวจสอบว่ามีข้อมูลเข้ามาหรือไม่ และอันที่สองสำหรับตรวจสอบว่าจบการทำงานรึยัง ถัดมาทุกคนจะเห็นว่าผมได้ทำการส่งคำว่า "Hello world" กับ "Hello krapoke Node" เข้าไปใน stream และจบสุดท้ายด้วย <em>null</em> ตรงนี้ผมใส่ไปเพื่อที่จะบอกว่าจบสำหรับการ ก็จะได้ผลลัพธ์ตามนี้เลยครับ</p>
+<p align="center">
+	<img src="https://i.imgur.com/shWncqs.png">
+</p>
+<p>ทุกคนจะเห็นว่า จะส่งมาเป็น buffer ครับ แล้วถ้าเราต้องการจะแปลงเป็น string ก็แค่เปลี่ยน console.log(data) => console.log(data.toString) แค่นี้ก็ได้แล้วครับ</p>
+<p align="center">
+	<img src="https://i.imgur.com/YHARu4H.png">
+</p>
+<p>ทั้งหมดคือตัวอย่างแรกที่พูดถึงพื้นฐานของ read data stream ครับ เรามาดูต่อว่าการใช้ pause(), resume() เป็นยังไงกันนนนน</p>
+<br>
+<br>
+<p><strong>_ตัวอย่างที่ 2</strong></p>
+<pre><code>const { Readable } = require('stream')
+
+const readStream = new Readable({
+  read(){}
+})
+
+readStream.on('data',(data)=>{
+  console.log("data arrive => ",data.toString())
+})
+
+readStream.on('end',()=>{
+  console.log("No more data")
+})
+
+
+readStream.push("Hello world");
+
+setTimeout(()=>{
+  console.log("Pause Stream");
+  readStream.pause();
+},500)
+
+setTimeout(()=>{
+  console.log("New data arrived");
+  readStream.push("Hello Krapoke Node");
+},1000)
+</code></pre>
+<p>ตรงนี้โค๊ดอาจจะงงนิดนึงครับ อธิบายคร่าวๆคือ ผมอ่านข้อมูล "Hello world" แล้วหลังจากนั้นเวลาผ่านไป 0.5 วินาทีให้ทำการหยุด stream ชั่วคราวดังนั้นทุกคนจะเห็นว่าอีก 0.5(1 วินาทีตั้งแต่เริ่มรัน) วินาที มีข้อมูลใหม่คือคำว่า "Hello Krapoke Node" ผลลัพธ์จะได้ตามนี้ครับ</p>
+<p align="center">
+	<img src="https://i.imgur.com/wqdCniW.png">
+</p>
+จะเห็นว่าไม่มี "Hello Krapoke Node" ออกมาเลยเพราะว่าผมได้ทำการหยุด stream ไว้ เลยทำให้ตัว stream ไม่ได้รับข้อมูลเข้ามาครับ
+<p>โอเคจบกันไปกับ readable stream ครับ</p>
+<br>
+</div></div></div></div>
+    <script src="/assets/js/app.f5ad6680.js" defer></script><script src="/assets/js/component--node-post.0ff6e571.js" defer></script>
+  </body>
+</html>
